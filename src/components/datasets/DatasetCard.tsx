@@ -8,9 +8,11 @@ import {
   formatDate,
   formatRating,
   getCreatorName,
+  getDatasetDescription,
   getDatasetTrend,
   getKaggleDatasetUrl,
 } from '../../utils/format'
+import { easeTransition } from '../../utils/motion'
 import { StatusBadge } from '../ui/StatusBadge'
 import { Sparkline } from './Sparkline'
 
@@ -18,39 +20,62 @@ interface DatasetCardProps {
   dataset: KaggleDataset
   bookmarked: boolean
   onToggleBookmark: (ref: string, dataset: KaggleDataset) => void
+  index?: number
 }
 
 export function DatasetCard({
   dataset,
   bookmarked,
   onToggleBookmark,
+  index = 0,
 }: DatasetCardProps) {
   const creator = getCreatorName(dataset)
   const trend = getDatasetTrend(dataset.ref)
   const summary = buildPerformanceSummary(dataset, dataset.ref)
+  const description = getDatasetDescription(dataset)
   const primaryMetric = formatRating(dataset.usabilityRating)
   const metricLabel = 'Usability Score'
 
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="group rounded-2xl border border-gray-100 bg-white p-6 shadow-card transition-shadow hover:shadow-md"
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      transition={{ ...easeTransition, delay: index * 0.04 }}
+      className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-card transition-shadow hover:border-gray-200 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] sm:p-6"
     >
-      <header className="flex items-start justify-between gap-4">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-200/80 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+      />
+
+      <header className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-base font-semibold tracking-tight text-gray-900">
+          <h3 className="line-clamp-2 text-base font-semibold leading-snug tracking-tight text-gray-900 sm:text-[1.05rem]">
             {dataset.title}
           </h3>
-          <p className="mt-1 text-sm text-gray-500">
+
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-gray-500 sm:text-sm">
             <span className="font-medium text-gray-700">{creator}</span>
-            <span className="mx-2 text-gray-300">•</span>
+            <span className="hidden text-gray-300 sm:inline">•</span>
             <span>{formatBytes(dataset.totalBytes)}</span>
-            <span className="mx-2 text-gray-300">•</span>
-            <span>Updated {formatDate(dataset.lastUpdated)}</span>
-          </p>
+            <span className="text-gray-300">•</span>
+            <span className="whitespace-nowrap">Updated {formatDate(dataset.lastUpdated)}</span>
+          </div>
+
+          {description && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-500"
+            >
+              {description}
+            </motion.p>
+          )}
         </div>
 
         <div className="flex shrink-0 items-center gap-1">
@@ -64,7 +89,7 @@ export function DatasetCard({
             className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-colors ${
               bookmarked
                 ? 'border-amber-200 bg-amber-50 text-amber-600'
-                : 'border-gray-100 bg-gray-50 text-gray-400 hover:text-gray-600'
+                : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-gray-200 hover:text-gray-600'
             }`}
           >
             <Bookmark
@@ -73,24 +98,26 @@ export function DatasetCard({
             />
           </motion.button>
 
-          <a
+          <motion.a
             href={getKaggleDatasetUrl(dataset.ref)}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open in browser"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-100 bg-gray-50 text-gray-400 transition-colors hover:text-gray-700"
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-100 bg-gray-50 text-gray-400 transition-colors hover:border-gray-200 hover:text-gray-700"
           >
             <ExternalLink className="h-4 w-4" />
-          </a>
+          </motion.a>
         </div>
       </header>
 
-      <div className="mt-8 flex items-end justify-between gap-4">
+      <div className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-gray-400">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400 sm:text-xs">
             {metricLabel}
           </p>
-          <p className="mt-1 text-4xl font-bold tracking-tight text-gray-900">
+          <p className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             {primaryMetric}
           </p>
           <p className="mt-1 text-sm text-gray-500">
@@ -101,7 +128,7 @@ export function DatasetCard({
           </p>
         </div>
 
-        <div className="flex flex-col items-end">
+        <div className="flex items-end justify-between gap-3 sm:flex-col sm:items-end">
           <Sparkline
             points={trend.points}
             positive={trend.direction !== 'down'}
@@ -121,11 +148,11 @@ export function DatasetCard({
         </div>
       </div>
 
-      <p className="mt-6 border-t border-gray-50 pt-5 text-sm leading-relaxed text-gray-500">
+      <p className="mt-5 border-t border-gray-50 pt-4 text-sm leading-relaxed text-gray-500 sm:mt-6 sm:pt-5">
         {summary}
       </p>
 
-      <footer className="mt-4 flex flex-wrap gap-2">
+      <footer className="mt-3 flex flex-wrap gap-2 sm:mt-4">
         <StatusBadge variant="neutral">
           {formatCount(dataset.voteCount)} votes
         </StatusBadge>

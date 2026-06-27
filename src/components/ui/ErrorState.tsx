@@ -12,7 +12,7 @@ export function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-red-100 bg-white px-8 py-16 text-center shadow-card">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-red-100 bg-white px-5 py-12 text-center shadow-card sm:px-8 sm:py-16">
       <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-500">
         <AlertCircle className="h-6 w-6" />
       </div>

@@ -38,6 +38,36 @@ export function getKaggleDatasetUrl(ref: string): string {
   return `https://www.kaggle.com/datasets/${ref}`
 }
 
+/** Strip markdown/HTML and clamp description text for card display */
+export function stripDescriptionText(text: string): string {
+  return text
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[#*_`>~-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+export function getDatasetDescription(
+  dataset: { subtitle?: string; description?: string },
+  maxLength = 140,
+): string | null {
+  const raw = dataset.subtitle?.trim() || dataset.description?.trim()
+  if (!raw) return null
+
+  const cleaned = stripDescriptionText(raw)
+  if (!cleaned) return null
+
+  if (cleaned.length <= maxLength) return cleaned
+  return `${cleaned.slice(0, maxLength).trimEnd()}…`
+}
+
+export function parseDatasetRef(ref: string): { owner: string; slug: string } | null {
+  const [owner, slug] = ref.split('/')
+  if (!owner || !slug) return null
+  return { owner, slug }
+}
+
 /** Deterministic pseudo-trend from dataset ref for sparkline + summary copy */
 export function getDatasetTrend(ref: string): {
   points: number[]

@@ -50,8 +50,8 @@ export function CredentialsForm({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-card">
-        <div className="flex items-start justify-between gap-4">
+      <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-card sm:p-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-50 text-gray-700">
               <KeyRound className="h-5 w-5" />

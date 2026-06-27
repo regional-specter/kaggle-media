@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import type { KaggleDataset } from '../../types/kaggle'
+import { staggerContainer } from '../../utils/motion'
 import { DatasetCard } from './DatasetCard'
 import { DatasetCardSkeleton } from './DatasetCardSkeleton'
 
@@ -45,7 +47,7 @@ export function DatasetGrid({
 
   if (loading) {
     return (
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
         {Array.from({ length: skeletonCount }).map((_, i) => (
           <DatasetCardSkeleton key={i} />
         ))}
@@ -55,19 +57,25 @@ export function DatasetGrid({
 
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {datasets.map((dataset) => (
+      <motion.div
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        {datasets.map((dataset, index) => (
           <DatasetCard
             key={dataset.ref}
             dataset={dataset}
             bookmarked={isBookmarked(dataset.ref)}
             onToggleBookmark={onToggleBookmark}
+            index={index}
           />
         ))}
-      </div>
+      </motion.div>
 
       {loadingMore && (
-        <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
             <DatasetCardSkeleton key={i} />
           ))}

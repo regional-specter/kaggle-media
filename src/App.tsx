@@ -1,6 +1,8 @@
+import { AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { AppLayout } from './components/layout/AppLayout'
 import { NavBar } from './components/layout/NavBar'
+import { PageTransition } from './components/ui/PageTransition'
 import { useBookmarks } from './hooks/useBookmarks'
 import { useCredentials } from './hooks/useCredentials'
 import type { AppTab } from './types/kaggle'
@@ -25,33 +27,41 @@ function App() {
         />
       }
     >
-      {activeTab === 'discover' && (
-        <DiscoverFeed
-          credentials={credentials}
-          hasCredentials={hasCredentials}
-          isBookmarked={isBookmarked}
-          onToggleBookmark={toggleBookmark}
-          onGoToSettings={() => setActiveTab('settings')}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {activeTab === 'discover' && (
+          <PageTransition tabKey="discover">
+            <DiscoverFeed
+              credentials={credentials}
+              hasCredentials={hasCredentials}
+              isBookmarked={isBookmarked}
+              onToggleBookmark={toggleBookmark}
+              onGoToSettings={() => setActiveTab('settings')}
+            />
+          </PageTransition>
+        )}
 
-      {activeTab === 'bookmarked' && (
-        <BookmarkedView
-          datasets={bookmarkedDatasets}
-          isBookmarked={isBookmarked}
-          onToggleBookmark={toggleBookmark}
-          onGoToDiscover={() => setActiveTab('discover')}
-        />
-      )}
+        {activeTab === 'bookmarked' && (
+          <PageTransition tabKey="bookmarked">
+            <BookmarkedView
+              datasets={bookmarkedDatasets}
+              isBookmarked={isBookmarked}
+              onToggleBookmark={toggleBookmark}
+              onGoToDiscover={() => setActiveTab('discover')}
+            />
+          </PageTransition>
+        )}
 
-      {activeTab === 'settings' && (
-        <SettingsView
-          credentials={credentials}
-          hasCredentials={hasCredentials}
-          onSave={saveCredentials}
-          onClear={clearCredentials}
-        />
-      )}
+        {activeTab === 'settings' && (
+          <PageTransition tabKey="settings">
+            <SettingsView
+              credentials={credentials}
+              hasCredentials={hasCredentials}
+              onSave={saveCredentials}
+              onClear={clearCredentials}
+            />
+          </PageTransition>
+        )}
+      </AnimatePresence>
     </AppLayout>
   )
 }
