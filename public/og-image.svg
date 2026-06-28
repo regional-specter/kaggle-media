@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Kaggle Scroller">
+  <rect width="1200" height="630" fill="#F8F9FA" />
+  <rect x="80" y="80" width="1040" height="470" rx="32" fill="#ffffff" stroke="#E5E7EB" stroke-width="2" />
+  <rect x="140" y="200" width="96" height="96" rx="24" fill="#111827" />
+  <text
+    x="188"
+    y="264"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="48"
+    font-weight="700"
+    fill="#ffffff"
+    text-anchor="middle"
+  >
+    K
+  </text>
+  <text
+    x="270"
+    y="238"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="56"
+    font-weight="700"
+    fill="#111827"
+  >
+    Kaggle Scroller
+  </text>
+  <text
+    x="270"
+    y="300"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="28"
+    font-weight="500"
+    fill="#6B7280"
+  >
+    Explore datasets with live metadata, search, and bookmarks
+  </text>
+</svg>

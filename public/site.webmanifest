@@ -1,0 +1,17 @@
+{
+  "name": "Kaggle Scroller",
+  "short_name": "Kaggle",
+  "description": "Explore Kaggle datasets with live metadata, search, sorting, and bookmarks.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F9FA",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
