@@ -4,6 +4,13 @@ const KAGGLE_API_BASE = 'https://www.kaggle.com/api/v1'
 
 const ALLOWED_PATH_PREFIXES = ['/datasets/list', '/datasets/metadata/']
 
+function getKagglePath(pathQuery: string | string[] | undefined): string {
+  if (!pathQuery) return ''
+  const segments = Array.isArray(pathQuery) ? pathQuery : [pathQuery]
+  const joined = segments.filter(Boolean).join('/')
+  return joined.startsWith('/') ? joined : `/${joined}`
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -14,9 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: 'Missing Authorization header' })
   }
 
-  const pathSegments = req.query.path
-  const segments = Array.isArray(pathSegments) ? pathSegments : [pathSegments ?? '']
-  const kagglePath = '/' + segments.filter(Boolean).join('/')
+  const kagglePath = getKagglePath(req.query.path)
 
   if (!ALLOWED_PATH_PREFIXES.some((prefix) => kagglePath.startsWith(prefix))) {
     return res.status(403).json({ error: 'Path not allowed' })
