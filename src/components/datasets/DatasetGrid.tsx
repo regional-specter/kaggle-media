@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import type { KaggleDataset } from '../../types/kaggle'
+import type { KaggleCredentials, KaggleDataset } from '../../types/kaggle'
 import { staggerContainer } from '../../utils/motion'
 import { DatasetCard } from './DatasetCard'
 import { DatasetCardSkeleton } from './DatasetCardSkeleton'
@@ -14,6 +14,8 @@ interface DatasetGridProps {
   isBookmarked: (ref: string) => boolean
   onToggleBookmark: (ref: string, dataset: KaggleDataset) => void
   skeletonCount?: number
+  credentials?: KaggleCredentials
+  lazyLoadDescriptions?: boolean
 }
 
 export function DatasetGrid({
@@ -25,6 +27,8 @@ export function DatasetGrid({
   isBookmarked,
   onToggleBookmark,
   skeletonCount = 6,
+  credentials,
+  lazyLoadDescriptions = false,
 }: DatasetGridProps) {
   const sentinelRef = useRef<HTMLDivElement>(null)
 
@@ -70,6 +74,8 @@ export function DatasetGrid({
             bookmarked={isBookmarked(dataset.ref)}
             onToggleBookmark={onToggleBookmark}
             index={index}
+            credentials={credentials}
+            lazyLoadDescription={lazyLoadDescriptions}
           />
         ))}
       </motion.div>

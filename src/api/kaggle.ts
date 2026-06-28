@@ -126,42 +126,6 @@ export async function getDatasetMetadata(
   }
 }
 
-export async function enrichDatasetsWithDescriptions(
-  credentials: KaggleCredentials,
-  datasets: KaggleDataset[],
-  concurrency = 4,
-): Promise<KaggleDataset[]> {
-  const needsEnrichment = datasets.filter(
-    (d) => !d.subtitle?.trim() && !d.description?.trim(),
-  )
-
-  if (needsEnrichment.length === 0) return datasets
-
-  const enriched = new Map<string, Pick<KaggleDataset, 'subtitle' | 'description'>>()
-
-  for (let i = 0; i < needsEnrichment.length; i += concurrency) {
-    const batch = needsEnrichment.slice(i, i + concurrency)
-    const results = await Promise.allSettled(
-      batch.map(async (dataset) => {
-        const meta = await getDatasetMetadata(credentials, dataset.ref)
-        return { ref: dataset.ref, meta }
-      }),
-    )
-
-    results.forEach((result) => {
-      if (result.status === 'fulfilled') {
-        enriched.set(result.value.ref, result.value.meta)
-      }
-    })
-  }
-
-  return datasets.map((dataset) => {
-    const meta = enriched.get(dataset.ref)
-    if (!meta) return dataset
-    return { ...dataset, ...meta }
-  })
-}
-
 export async function validateCredentials(
   credentials: KaggleCredentials,
 ): Promise<boolean> {

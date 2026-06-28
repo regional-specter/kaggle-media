@@ -1,43 +1,52 @@
 import { motion } from 'framer-motion'
 import { Bookmark, ExternalLink } from 'lucide-react'
-import type { KaggleDataset } from '../../types/kaggle'
+import { useLazyDatasetDescription } from '../../hooks/useLazyDatasetDescription'
+import type { KaggleCredentials, KaggleDataset } from '../../types/kaggle'
 import {
-  buildPerformanceSummary,
+  buildDatasetSummary,
   formatBytes,
   formatCount,
   formatDate,
   formatRating,
   getCreatorName,
   getDatasetDescription,
-  getDatasetTrend,
   getKaggleDatasetUrl,
 } from '../../utils/format'
 import { easeTransition } from '../../utils/motion'
 import { StatusBadge } from '../ui/StatusBadge'
-import { Sparkline } from './Sparkline'
 
 interface DatasetCardProps {
   dataset: KaggleDataset
   bookmarked: boolean
   onToggleBookmark: (ref: string, dataset: KaggleDataset) => void
   index?: number
+  credentials?: KaggleCredentials
+  lazyLoadDescription?: boolean
 }
 
 export function DatasetCard({
-  dataset,
+  dataset: initialDataset,
   bookmarked,
   onToggleBookmark,
   index = 0,
+  credentials,
+  lazyLoadDescription = false,
 }: DatasetCardProps) {
+  const { cardRef, dataset } = useLazyDatasetDescription({
+    credentials,
+    dataset: initialDataset,
+    enabled: lazyLoadDescription,
+  })
+
   const creator = getCreatorName(dataset)
-  const trend = getDatasetTrend(dataset.ref)
-  const summary = buildPerformanceSummary(dataset, dataset.ref)
+  const summary = buildDatasetSummary(dataset)
   const description = getDatasetDescription(dataset)
   const primaryMetric = formatRating(dataset.usabilityRating)
   const metricLabel = 'Usability Score'
 
   return (
     <motion.article
+      ref={cardRef}
       layout
       variants={{
         hidden: { opacity: 0, y: 20 },
@@ -128,23 +137,23 @@ export function DatasetCard({
           </p>
         </div>
 
-        <div className="flex items-end justify-between gap-3 sm:flex-col sm:items-end">
-          <Sparkline
-            points={trend.points}
-            positive={trend.direction !== 'down'}
-          />
-          <StatusBadge
-            variant={
-              trend.direction === 'up'
-                ? 'positive'
-                : trend.direction === 'down'
-                  ? 'negative'
-                  : 'neutral'
-            }
-          >
-            {trend.direction === 'up' && '+'}
-            {trend.direction === 'flat' ? 'Stable' : `${trend.changePercent}%`}
-          </StatusBadge>
+        <div className="flex gap-3 sm:flex-col sm:items-end sm:gap-2">
+          <div className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-right sm:min-w-[7rem]">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
+              Votes
+            </p>
+            <p className="mt-0.5 text-lg font-semibold tracking-tight text-gray-900">
+              {formatCount(dataset.voteCount)}
+            </p>
+          </div>
+          <div className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-right sm:min-w-[7rem]">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
+              Size
+            </p>
+            <p className="mt-0.5 text-lg font-semibold tracking-tight text-gray-900">
+              {formatBytes(dataset.totalBytes)}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -156,7 +165,9 @@ export function DatasetCard({
         <StatusBadge variant="neutral">
           {formatCount(dataset.voteCount)} votes
         </StatusBadge>
-        <StatusBadge variant="positive">Active dataset</StatusBadge>
+        <StatusBadge variant="positive">
+          Updated {formatDate(dataset.lastUpdated)}
+        </StatusBadge>
       </footer>
     </motion.article>
   )

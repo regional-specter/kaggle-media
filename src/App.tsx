@@ -1,17 +1,16 @@
 import { AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
 import { AppLayout } from './components/layout/AppLayout'
 import { NavBar } from './components/layout/NavBar'
 import { PageTransition } from './components/ui/PageTransition'
+import { useAppTab } from './hooks/useAppTab'
 import { useBookmarks } from './hooks/useBookmarks'
 import { useCredentials } from './hooks/useCredentials'
-import type { AppTab } from './types/kaggle'
 import { BookmarkedView } from './views/BookmarkedView'
 import { DiscoverFeed } from './views/DiscoverFeed'
 import { SettingsView } from './views/SettingsView'
 
 function App() {
-  const [activeTab, setActiveTab] = useState<AppTab>('discover')
+  const [activeTab, setActiveTab] = useAppTab()
   const { credentials, saveCredentials, clearCredentials, hasCredentials } =
     useCredentials()
   const { bookmarks, bookmarkedDatasets, isBookmarked, toggleBookmark } =

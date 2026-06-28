@@ -68,44 +68,17 @@ export function parseDatasetRef(ref: string): { owner: string; slug: string } | 
   return { owner, slug }
 }
 
-/** Deterministic pseudo-trend from dataset ref for sparkline + summary copy */
-export function getDatasetTrend(ref: string): {
-  points: number[]
-  changePercent: number
-  direction: 'up' | 'down' | 'flat'
-} {
-  let hash = 0
-  for (let i = 0; i < ref.length; i++) {
-    hash = (hash << 5) - hash + ref.charCodeAt(i)
-    hash |= 0
-  }
-
-  const changePercent = ((Math.abs(hash) % 28) + 2) * (hash % 2 === 0 ? 1 : -1)
-  const direction =
-    changePercent > 3 ? 'up' : changePercent < -3 ? 'down' : 'flat'
-
-  const points = Array.from({ length: 12 }, (_, i) => {
-    const wave = Math.sin((i + (hash % 7)) * 0.9) * 12
-    const trend = (i / 11) * changePercent * 0.4
-    return 50 + wave + trend
-  })
-
-  return { points, changePercent, direction }
-}
-
-export function buildPerformanceSummary(
-  dataset: { downloadCount?: number; voteCount?: number },
-  ref: string,
-): string {
-  const { changePercent, direction } = getDatasetTrend(ref)
+/** Summary copy built only from live Kaggle metadata fields */
+export function buildDatasetSummary(dataset: {
+  downloadCount?: number
+  voteCount?: number
+  usabilityRating?: number
+  lastUpdated?: string
+}): string {
   const downloads = formatCount(dataset.downloadCount)
   const votes = formatCount(dataset.voteCount)
+  const rating = formatRating(dataset.usabilityRating)
+  const updated = formatDate(dataset.lastUpdated)
 
-  if (direction === 'up') {
-    return `Compared to last month, downloads increased by ${Math.abs(changePercent)}%. This dataset has ${downloads} total downloads and ${votes} community votes.`
-  }
-  if (direction === 'down') {
-    return `Activity cooled slightly with a ${Math.abs(changePercent)}% dip in recent downloads. Still holding ${downloads} downloads and ${votes} votes overall.`
-  }
-  return `Download activity held steady this month. The dataset maintains ${downloads} downloads and ${votes} votes from the community.`
+  return `Usability score ${rating} with ${downloads} downloads and ${votes} community votes. Last updated ${updated}.`
 }

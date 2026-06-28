@@ -129,6 +129,8 @@ export function DiscoverFeed({
           onLoadMore={loadMore}
           isBookmarked={isBookmarked}
           onToggleBookmark={onToggleBookmark}
+          credentials={credentials}
+          lazyLoadDescriptions
         />
       )}
     </div>

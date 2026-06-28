@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { enrichDatasetsWithDescriptions, listDatasets } from '../api/kaggle'
+import { listDatasets } from '../api/kaggle'
 import type { KaggleCredentials, KaggleDataset } from '../types/kaggle'
 
 interface UseDatasetsOptions {
@@ -22,24 +22,6 @@ export function useDatasets({
   const [loadingMore, setLoadingMore] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const requestId = useRef(0)
-
-  const enrichInBackground = useCallback(
-    async (items: KaggleDataset[], id: number) => {
-      try {
-        const enriched = await enrichDatasetsWithDescriptions(credentials, items)
-        if (id !== requestId.current) return
-        setDatasets((prev) =>
-          prev.map((dataset) => {
-            const match = enriched.find((d) => d.ref === dataset.ref)
-            return match ?? dataset
-          }),
-        )
-      } catch {
-        // Descriptions are optional — fail silently
-      }
-    },
-    [credentials],
-  )
 
   const fetchPage = useCallback(
     async (pageToLoad: number, append: boolean) => {
@@ -64,8 +46,6 @@ export function useDatasets({
         setDatasets((prev) => (append ? [...prev, ...results] : results))
         setHasMore(results.length >= 20)
         setPage(pageToLoad)
-
-        void enrichInBackground(results, id)
       } catch (err) {
         if (id !== requestId.current) return
         setError(err instanceof Error ? err.message : 'Failed to load datasets')
@@ -77,7 +57,7 @@ export function useDatasets({
         }
       }
     },
-    [credentials, enrichInBackground, search, sortBy],
+    [credentials, search, sortBy],
   )
 
   const refresh = useCallback(() => {
