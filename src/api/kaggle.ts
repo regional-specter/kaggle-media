@@ -5,7 +5,8 @@ import type {
 } from '../types/kaggle'
 import { parseDatasetRef } from '../utils/format'
 
-const KAGGLE_API_BASE = 'https://www.kaggle.com/api/v1'
+const KAGGLE_API_BASE =
+  import.meta.env.VITE_KAGGLE_API_BASE ?? '/api/kaggle'
 
 type RawDataset = Record<string, unknown>
 
@@ -19,7 +20,10 @@ async function kaggleFetch<T>(
   credentials: KaggleCredentials,
   params?: Record<string, string | number | undefined>,
 ): Promise<T> {
-  const url = new URL(`${KAGGLE_API_BASE}${path}`)
+  const isProxy = !KAGGLE_API_BASE.startsWith('http')
+  const url = isProxy
+    ? new URL(`${KAGGLE_API_BASE}${path}`, window.location.origin)
+    : new URL(`${KAGGLE_API_BASE}${path}`)
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
