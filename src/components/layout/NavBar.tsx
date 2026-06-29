@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Bookmark, Compass, Settings } from 'lucide-react'
+import { Bookmark, Compass, Database, Settings } from 'lucide-react'
 import type { AppTab } from '../../types/kaggle'
 import { springTransition } from '../../utils/motion'
 
@@ -79,12 +79,10 @@ export function NavBar({ activeTab, onTabChange, bookmarkCount }: NavBarProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gray-900 text-sm font-bold text-white shadow-sm sm:h-10 sm:w-10">
-              K
-            </div>
+            <Database className="h-6 w-6 shrink-0 text-[#00D06F] sm:h-7 sm:w-7" strokeWidth={2.5} />
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight text-gray-900">
-                Kaggle Scroller
+                KaggleFlow
               </p>
               <p className="hidden text-xs text-gray-500 sm:block">
                 Dataset exploration

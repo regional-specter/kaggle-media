@@ -1,4 +1,4 @@
-# Kaggle Scroller — Project Context
+# KaggleFlow — Project Context
 
 This document captures what the project is, how it is built, where it stands today, and what remains before public deployment. It is intended for developers (and AI assistants) picking up the codebase cold.
 
@@ -6,7 +6,7 @@ This document captures what the project is, how it is built, where it stands tod
 
 ## What this project is
 
-**Kaggle Scroller** is a client-side React application for exploring Kaggle datasets and bookmarking favorites. Users supply their own Kaggle API credentials; the app fetches live dataset metadata from the [Kaggle REST API](https://www.kaggle.com/api/v1) and presents it in a premium dashboard-style UI inspired by tools like Tableau Pulse.
+**KaggleFlow** is a client-side React application for exploring Kaggle datasets and bookmarking favorites. Users supply their own Kaggle API credentials; the app fetches live dataset metadata from the [Kaggle REST API](https://www.kaggle.com/api/v1) and presents it in a premium dashboard-style UI inspired by tools like Tableau Pulse.
 
 It is **not** affiliated with Kaggle. It is a third-party frontend that consumes Kaggle's public API using Basic Authentication.
 

@@ -1,6 +1,6 @@
 {
-  "name": "Kaggle Scroller",
-  "short_name": "Kaggle",
+  "name": "KaggleFlow",
+  "short_name": "KaggleFlow",
   "description": "Explore Kaggle datasets with live metadata, search, sorting, and bookmarks.",
   "start_url": "/",
   "display": "standalone",
