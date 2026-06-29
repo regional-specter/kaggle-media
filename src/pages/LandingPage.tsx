@@ -176,58 +176,6 @@ export function LandingPage() {
           </motion.section>
         </div>
       </div>
-
-      {/* how it works — separate stacking context, sits cleanly below the hero */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-8 sm:px-6 md:pb-10 lg:px-10">
-        <motion.section
-          className="grid grid-cols-1 items-center gap-6 md:gap-8 md:pt-2 lg:grid-cols-[1fr_1.1fr] lg:gap-12"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.div variants={fadeUp} className="hidden justify-center md:flex">
-            <img
-              src={mobilePreview}
-              alt="KaggleFlow discover feed shown on a mobile screen"
-              className="h-auto w-full max-w-[220px] select-none sm:max-w-[280px] md:max-w-[340px] lg:max-w-[400px] xl:max-w-[480px]"
-            />
-          </motion.div>
-
-          <motion.div variants={fadeUp} className="flex flex-col items-center gap-6 text-left sm:gap-7 md:gap-8 lg:items-start lg:gap-9 lg:text-left">
-            {steps.map((step) => (
-              <div key={step.num} className="max-w-md">
-                <h3 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
-                  {step.num}. {step.title}
-                </h3>
-                <p className="mt-2 text-sm font-medium text-gray-600 sm:text-base">
-                  {step.desc}
-                </p>
-              </div>
-            ))}
-          </motion.div>
-        </motion.section>
-      </div>
-
-      {/* footer */}
-      <footer className="relative bg-white pt-8">
-        <img
-          src={footerElement}
-          alt=""
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 right-0 hidden w-[440px] shrink-0 select-none md:block md:w-[520px] lg:w-[600px] xl:w-[450px]"
-        />
-
-        <div className="relative z-10 max-w-sm px-6 pb-8 lg:px-10">
-          <div className="flex items-center gap-2">
-            <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
-            <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
-          </div>
-          <p className="mt-4 w-[750px] max-w-full text-sm font-medium leading-relaxed text-gray-600">
-            KaggleFlow is a streamlined discovery tool built for curious data scientists and weekend builders. We turn Kaggle's massive data repository into a fluid, metrics-first scrolling feed. Whether you're on a trip or just seeking project inspiration, KaggleFlow makes it effortless to browse on the go, bookmark cool datasets instantly, and jump straight into building whenever you're ready
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }
