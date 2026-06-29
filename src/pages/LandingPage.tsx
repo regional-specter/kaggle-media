@@ -6,7 +6,7 @@ import { staggerContainer } from '../utils/motion'
 import bgElement from '../assets/bg-element.png'
 import leftCards from '../assets/left-cards.png'
 import rightCards from '../assets/right-cards.png'
-import mobilePreview from '../assets/mobile-preview.png'
+import mobilePreview from '../assets/Mobile-preview.png'
 import footerElement from '../assets/footer-element.png'
 
 const steps = [
