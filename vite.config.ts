@@ -39,6 +39,11 @@ function siteSeoPlugin(siteUrl: string | undefined): Plugin {
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>${siteUrl}/app</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
 `,
       )

@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --color-surface: #f8f9fa;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-surface: #ffffff;
   --color-card: #ffffff;
   --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
@@ -22,6 +22,7 @@
   body {
     margin: 0;
     font-family: var(--font-sans);
+    letter-spacing: -0.05em;
     background-color: var(--color-surface);
     color: #111827;
   }
@@ -34,5 +35,9 @@
 @layer utilities {
   .shadow-card {
     box-shadow: var(--shadow-card);
+  }
+
+  .btn-cta {
+    background: linear-gradient(to top, #4a4a4a, #191919);
   }
 }
