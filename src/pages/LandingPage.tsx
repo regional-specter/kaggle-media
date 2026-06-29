@@ -35,16 +35,17 @@ function RotatingPhrase() {
   return (
     <motion.span
       layout
+      transition={{ layout: { type: 'spring', stiffness: 260, damping: 30 } }}
       className="relative inline-flex h-[1.15em] items-center overflow-hidden align-bottom"
-      transition={{ type: 'spring', stiffness: 280, damping: 28 }}
     >
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         <motion.span
           key={rotatingPhrases[index]}
-          initial={{ y: 22, opacity: 0, filter: 'blur(6px)' }}
+          layout
+          initial={{ y: 24, opacity: 0, filter: 'blur(8px)' }}
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: -22, opacity: 0, filter: 'blur(6px)' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ y: -24, opacity: 0, filter: 'blur(8px)' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="inline-block whitespace-nowrap text-[#00D06F]"
         >
           {rotatingPhrases[index]}
@@ -117,7 +118,7 @@ export function LandingPage() {
         >
           <motion.p
             variants={fadeUp}
-            className="rounded-full bg-[#0CA533]/20 px-4 py-1.5 text-xs font-semibold text-[#0CA533]"
+            className="rounded-full bg-[#0CA533]/20 px-4 py-1.5 text-md font-semibold text-[#0CA533]"
           >
             For Curious Data Builders
           </motion.p>
