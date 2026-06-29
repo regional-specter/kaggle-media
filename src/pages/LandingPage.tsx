@@ -107,12 +107,12 @@ export function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="flex items-center gap-2">
-              <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
-              <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
+            <div className="flex items-center gap-2.5">
+              <Database className="h-7 w-7 text-[#00D06F] sm:h-8 sm:w-8" strokeWidth={2.5} />
+              <span className="text-xl font-bold text-gray-900 sm:text-2xl">KaggleFlow</span>
             </div>
 
-            <nav className="hidden items-center justify-center gap-8 text-sm font-medium text-gray-700 sm:flex">
+            <nav className="hidden items-center justify-center gap-10 text-base font-medium text-gray-700 sm:flex">
               <a href="#" className="transition hover:text-gray-900">Home</a>
               <a href="#" className="transition hover:text-gray-900">How it works</a>
             </nav>
@@ -123,7 +123,7 @@ export function LandingPage() {
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-                className="rounded-lg bg-[#00D06F] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-95 sm:px-5 sm:py-2.5"
+                className="rounded-lg bg-[#00D06F] px-5 py-2.5 text-base font-semibold text-white shadow-sm transition-colors hover:brightness-95 sm:px-6 sm:py-3"
               >
                 Get Started
               </MotionLink>
