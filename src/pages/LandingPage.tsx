@@ -6,6 +6,28 @@ import { staggerContainer } from '../utils/motion'
 import bgElement from '../assets/bg-element.png'
 import leftCards from '../assets/left-cards.png'
 import rightCards from '../assets/right-cards.png'
+import mobilePreview from '../assets/mobile-preview.png'
+import footerElement from '../assets/footer-element.png'
+
+const footerLinks = ['Home', 'How it Works', 'Dashboard', 'Contact']
+
+const steps = [
+  {
+    num: '1',
+    title: 'Scroll Anywhere',
+    desc: 'Outside on a trip or relaxing? Browse a premium, distraction-free feed of trending Kaggle datasets',
+  },
+  {
+    num: '2',
+    title: 'Bookmark Instantly',
+    desc: 'Spot a unique dataset or a niche financial index? Save it to your dashboard with a single click',
+  },
+  {
+    num: '3',
+    title: 'Build Later',
+    desc: "When you're back at your desk ready for a weekend project, open your bookmarks and jump straight to the data",
+  },
+]
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -57,104 +79,176 @@ function RotatingPhrase() {
 
 export function LandingPage() {
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-white">
-      {/* background glow */}
-      <img
-        src={bgElement}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[260px] w-full max-w-5xl -translate-x-1/2 select-none"
-      />
+    <div className="relative bg-white">
+      {/* hero zone — owns its own decorative layer so absolute images
+          stay scoped to the hero's bottom, not the whole page's bottom */}
+      <div className="relative overflow-hidden">
+        <img
+          src={bgElement}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-[260px] w-full max-w-5xl -translate-x-1/2 select-none"
+        />
+        <img
+          src={leftCards}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute bottom-16 left-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
+        />
+        <img
+          src={rightCards}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute bottom-16 right-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
+        />
 
-      {/* decorative dataset cards */}
-      <img
-        src={leftCards}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute bottom-16 left-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
-      />
-      <img
-        src={rightCards}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute bottom-16 right-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
-      />
+        <div className="relative z-10 mx-auto flex min-h-dvh max-w-6xl flex-col px-6 py-8 lg:px-10">
+          <motion.header
+            className="grid grid-cols-2 items-center sm:grid-cols-3"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="flex items-center gap-2">
+              <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
+              <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
+            </div>
 
-      <div className="relative z-10 mx-auto flex min-h-dvh max-w-6xl flex-col px-6 py-8 lg:px-10">
-        <motion.header
-          className="grid grid-cols-2 items-center sm:grid-cols-3"
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="flex items-center gap-2">
-            <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
-            <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
-          </div>
+            <nav className="hidden items-center justify-center gap-8 text-sm font-medium text-gray-700 sm:flex">
+              <a href="#" className="transition hover:text-gray-900">Home</a>
+              <a href="#" className="transition hover:text-gray-900">How it works</a>
+            </nav>
 
-          <nav className="hidden items-center justify-center gap-8 text-sm font-medium text-gray-700 sm:flex">
-            <a href="#" className="transition hover:text-gray-900">Home</a>
-            <a href="#" className="transition hover:text-gray-900">How it works</a>
-          </nav>
+            <div className="flex justify-end">
+              <MotionLink
+                to="/app"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                className="rounded-lg bg-[#00D06F] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-95"
+              >
+                Get Started
+              </MotionLink>
+            </div>
+          </motion.header>
 
-          <div className="flex justify-end">
-            <MotionLink
-              to="/app"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-              className="rounded-lg bg-[#00D06F] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-95"
+          <motion.section
+            className="mt-20 flex flex-1 flex-col items-center text-center sm:mt-28"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.p
+              variants={fadeUp}
+              className="rounded-full bg-[#0CA533]/20 px-5 py-2 text-sm font-semibold text-[#0CA533]"
             >
-              Get Started
-            </MotionLink>
-          </div>
-        </motion.header>
+              For Curious Data Builders
+            </motion.p>
 
+            <motion.h1
+              variants={fadeUp}
+              className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+            >
+              Your next <RotatingPhrase />,
+              <br />
+              discovered in seconds
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 max-w-xl text-base font-medium text-gray-600 sm:text-lg"
+            >
+              Whether you're commuting, traveling, or just scrolling, KaggleFlow
+              makes it effortless to discover, evaluate, and bookmark fascinating
+              Kaggle datasets for your next build
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="mt-9">
+              <MotionLink
+                to="/app"
+                whileHover={{ scale: 1.035, boxShadow: '0 12px 28px rgba(0,0,0,0.22)' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+                className="btn-cta inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-sm font-medium text-white shadow-lg"
+              >
+                Try KaggleFlow, its free
+                <ArrowRight className="h-4 w-4" />
+              </MotionLink>
+            </motion.div>
+          </motion.section>
+        </div>
+      </div>
+
+      {/* how it works — separate stacking context, sits cleanly below the hero */}
+      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-20 lg:px-10">
         <motion.section
-          className="mt-20 flex flex-1 flex-col items-center text-center sm:mt-28"
+          className="grid grid-cols-1 items-center gap-12 pt-2 lg:grid-cols-[1fr_1.1fr] lg:gap-12"
           variants={staggerContainer}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.p
-            variants={fadeUp}
-            className="rounded-full bg-[#0CA533]/20 px-4 py-1.5 text-md font-semibold text-[#0CA533]"
-          >
-            For Curious Data Builders
-          </motion.p>
+          <motion.div variants={fadeUp} className="flex justify-center">
+            <img
+              src={mobilePreview}
+              alt="KaggleFlow discover feed shown on a mobile screen"
+              className="w-full max-w-[480px] select-none"
+            />
+          </motion.div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
-          >
-            Your next <RotatingPhrase />,
-            <br />
-            discovered in seconds
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            className="mt-6 max-w-xl text-base font-medium text-gray-600 sm:text-lg"
-          >
-            Whether you're commuting, traveling, or just scrolling, KaggleFlow
-            makes it effortless to discover, evaluate, and bookmark fascinating
-            Kaggle datasets for your next build
-          </motion.p>
-
-          <motion.div variants={fadeUp} className="mt-9">
-            <MotionLink
-              to="/app"
-              whileHover={{ scale: 1.035, boxShadow: '0 12px 28px rgba(0,0,0,0.22)' }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-              className="btn-cta inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-sm font-medium text-white shadow-lg"
-            >
-              Try KaggleFlow, its free
-              <ArrowRight className="h-4 w-4" />
-            </MotionLink>
+          <motion.div variants={fadeUp} className="flex flex-col items-center gap-9 text-center">
+            {steps.map((step) => (
+              <div key={step.num}>
+                <h3 className="text-2xl font-semibold tracking-tight text-gray-900">
+                  {step.num}. {step.title}
+                </h3>
+                <p className="mt-2 text-base font-medium text-gray-600">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
           </motion.div>
         </motion.section>
       </div>
+
+      {/* footer */}
+      <footer className="relative overflow-x-hidden bg-white px-6 py-20 lg:px-10 lg:py-24">
+        <img
+          src={footerElement}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute right-0 top-1/2 hidden w-[560px] -translate-y-1/2 select-none sm:block md:w-[640px] lg:w-[520px]"
+        />
+
+        <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-14 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-xs">
+            <div className="flex items-center gap-2">
+              <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
+              <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
+            </div>
+            <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">
+              KaggleFlow is a discovery tool for curious data builders. We make
+              it effortless to browse, evaluate, and bookmark Kaggle datasets,
+              so your next build starts in seconds, not hours.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-3 text-center">
+            <h4 className="font-semibold text-gray-900">Navigation</h4>
+            {footerLinks.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-sm font-medium text-gray-600 transition hover:text-gray-900"
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+
+          <div className="hidden w-40 sm:block" aria-hidden />
+        </div>
+      </footer>
     </div>
   )
 }
