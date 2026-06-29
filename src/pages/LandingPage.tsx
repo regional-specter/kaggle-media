@@ -6,26 +6,6 @@ import { staggerContainer } from '../utils/motion'
 import bgElement from '../assets/bg-element.png'
 import leftCards from '../assets/left-cards.png'
 import rightCards from '../assets/right-cards.png'
-import mobilePreview from '../assets/Mobile-preview.png'
-import footerElement from '../assets/footer-element.png'
-
-const steps = [
-  {
-    num: '1',
-    title: 'Scroll Anywhere',
-    desc: 'Outside on a trip or relaxing? Browse a premium, distraction-free feed of trending Kaggle datasets',
-  },
-  {
-    num: '2',
-    title: 'Bookmark Instantly',
-    desc: 'Spot a unique dataset or a niche financial index? Save it to your dashboard with a single click',
-  },
-  {
-    num: '3',
-    title: 'Build Later',
-    desc: "When you're back at your desk ready for a weekend project, open your bookmarks and jump straight to the data",
-  },
-]
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
