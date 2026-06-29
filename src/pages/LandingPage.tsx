@@ -80,29 +80,29 @@ export function LandingPage() {
     <div className="relative overflow-x-hidden bg-white">
       {/* hero zone — owns its own decorative layer so absolute images
           stay scoped to the hero's bottom, not the whole page's bottom */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden md:min-h-dvh">
         <img
           src={bgElement}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-[260px] w-full max-w-5xl -translate-x-1/2 select-none"
+          className="pointer-events-none absolute left-1/2 top-1/2 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 select-none sm:max-w-4xl lg:max-w-5xl"
         />
         <img
           src={leftCards}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute bottom-16 left-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
+          className="pointer-events-none absolute bottom-10 left-0 hidden w-64 select-none lg:bottom-16 lg:block lg:w-72 xl:w-80 2xl:w-96"
         />
         <img
           src={rightCards}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute bottom-16 right-0 hidden w-72 select-none sm:block md:w-80 lg:w-96"
+          className="pointer-events-none absolute bottom-10 right-0 hidden w-64 select-none lg:bottom-16 lg:block lg:w-72 xl:w-80 2xl:w-96"
         />
 
-        <div className="relative z-10 mx-auto flex min-h-dvh max-w-6xl flex-col px-6 py-8 lg:px-10">
+        <div className="relative z-10 mx-auto flex max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-8 md:min-h-dvh lg:px-10">
           <motion.header
-            className="grid grid-cols-2 items-center sm:grid-cols-3"
+            className="grid shrink-0 grid-cols-2 items-center sm:grid-cols-3"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
@@ -123,7 +123,7 @@ export function LandingPage() {
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-                className="rounded-lg bg-[#00D06F] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-95"
+                className="rounded-lg bg-[#00D06F] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:brightness-95 sm:px-5 sm:py-2.5"
               >
                 Get Started
               </MotionLink>
@@ -131,21 +131,21 @@ export function LandingPage() {
           </motion.header>
 
           <motion.section
-            className="mt-20 flex flex-1 flex-col items-center text-center sm:mt-28"
+            className="flex flex-col items-center pt-8 pb-10 text-center sm:pt-10 sm:pb-12 md:flex-1 md:justify-center md:py-0"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
           >
             <motion.p
               variants={fadeUp}
-              className="rounded-full bg-[#0CA533]/20 px-5 py-2 text-sm font-semibold text-[#0CA533]"
+              className="rounded-full bg-[#0CA533]/20 px-4 py-1.5 text-xs font-semibold text-[#0CA533] sm:px-5 sm:py-2 sm:text-sm"
             >
               For Curious Data Builders
             </motion.p>
 
             <motion.h1
               variants={fadeUp}
-              className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+              className="mt-5 max-w-3xl px-1 text-[1.75rem] font-semibold leading-tight tracking-tight text-gray-900 sm:mt-6 sm:px-0 sm:text-4xl md:text-5xl lg:text-6xl"
             >
               Your next <RotatingPhrase />,
               <br />
@@ -154,20 +154,20 @@ export function LandingPage() {
 
             <motion.p
               variants={fadeUp}
-              className="mt-6 max-w-xl text-base font-medium text-gray-600 sm:text-lg"
+              className="mt-5 max-w-xl px-2 text-sm font-medium text-gray-600 sm:mt-6 sm:px-0 sm:text-base md:text-lg"
             >
               Whether you're commuting, traveling, or just scrolling, KaggleFlow
               makes it effortless to discover, evaluate, and bookmark fascinating
               Kaggle datasets for your next build
             </motion.p>
 
-            <motion.div variants={fadeUp} className="mt-9">
+            <motion.div variants={fadeUp} className="mt-7 sm:mt-9">
               <MotionLink
                 to="/app"
                 whileHover={{ scale: 1.035, boxShadow: '0 12px 28px rgba(0,0,0,0.22)' }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                className="btn-cta inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-sm font-medium text-white shadow-lg"
+                className="btn-cta inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium text-white shadow-lg sm:px-7 sm:py-3.5"
               >
                 Try KaggleFlow, its free
                 <ArrowRight className="h-4 w-4" />
@@ -178,29 +178,29 @@ export function LandingPage() {
       </div>
 
       {/* how it works — separate stacking context, sits cleanly below the hero */}
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-10 lg:px-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-8 sm:px-6 md:pb-10 lg:px-10">
         <motion.section
-          className="grid grid-cols-1 items-center gap-12 pt-2 lg:grid-cols-[1fr_1.1fr] lg:gap-12"
+          className="grid grid-cols-1 items-center gap-6 md:gap-8 md:pt-2 lg:grid-cols-[1fr_1.1fr] lg:gap-12"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.div variants={fadeUp} className="flex justify-center">
+          <motion.div variants={fadeUp} className="hidden justify-center md:flex">
             <img
               src={mobilePreview}
               alt="KaggleFlow discover feed shown on a mobile screen"
-              className="w-full max-w-[480px] select-none"
+              className="h-auto w-full max-w-[220px] select-none sm:max-w-[280px] md:max-w-[340px] lg:max-w-[400px] xl:max-w-[480px]"
             />
           </motion.div>
 
-          <motion.div variants={fadeUp} className="flex flex-col items-center gap-9 text-left">
+          <motion.div variants={fadeUp} className="flex flex-col items-center gap-6 text-left sm:gap-7 md:gap-8 lg:items-start lg:gap-9 lg:text-left">
             {steps.map((step) => (
-              <div key={step.num}>
-                <h3 className="text-2xl font-semibold tracking-tight text-gray-900">
+              <div key={step.num} className="max-w-md">
+                <h3 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
                   {step.num}. {step.title}
                 </h3>
-                <p className="mt-2 text-base font-medium text-gray-600">
+                <p className="mt-2 text-sm font-medium text-gray-600 sm:text-base">
                   {step.desc}
                 </p>
               </div>
@@ -215,10 +215,10 @@ export function LandingPage() {
           src={footerElement}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute bottom-0 right-0 hidden w-[440px] shrink-0 select-none sm:block md:w-[520px] lg:w-[600px] xl:w-[500px]"
+          className="pointer-events-none absolute bottom-0 right-0 hidden w-[440px] shrink-0 select-none md:block md:w-[520px] lg:w-[600px] xl:w-[450px]"
         />
 
-        <div className="relative z-10 max-w-xs px-6 pb-8 lg:px-10">
+        <div className="relative z-10 max-w-sm px-6 pb-8 lg:px-10">
           <div className="flex items-center gap-2">
             <Database className="h-6 w-6 text-[#00D06F]" strokeWidth={2.5} />
             <span className="text-lg font-bold text-gray-900">KaggleFlow</span>
